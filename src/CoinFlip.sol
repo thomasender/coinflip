@@ -86,24 +86,25 @@ contract CoinFlip is VRFConsumerBaseV2 {
         uint256 requestId,
         uint256[] memory randomWords
     ) internal override {
-        s_flipRequests[requestId].requestFulfilled = true;
-        s_flipRequests[requestId].randomWord = randomWords[0];
+        FlipRequest storage flipRequest = s_flipRequests[requestId];
+        flipRequest.requestFulfilled = true;
+        flipRequest.randomWord = randomWords[0];
         uint256 coinFlip = randomWords[0] % 2;
         if (coinFlip == 0) {
-            s_flipRequests[requestId].didWin = true;
+            flipRequest.didWin = true;
             (bool success, ) = payable(s_flipRequests[requestId].player).call{
                 value: i_entryFee * 2
             }("");
             require(success, "CoinFlip__TransferFailed");
             emit CoinFlip__FlipResult({
                 requestId: requestId,
-                player: msg.sender,
+                player: flipRequest.player,
                 didWin: true
             });
         } else {
             emit CoinFlip__FlipResult({
                 requestId: requestId,
-                player: msg.sender,
+                player: flipRequest.player,
                 didWin: false
             });
         }
