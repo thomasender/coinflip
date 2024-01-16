@@ -3,7 +3,7 @@ import { LoadingSpinner } from './loading-spinner'
 import styled from 'styled-components'
 import { useCallback, useEffect } from 'react'
 import { Polygon } from '../icons/polygon'
-import { ETHERSCAN_MUMBAI_POLYGON_TX_BASE_URL, ETHERSCAN_POLYGON_TX_BASE_URL } from '../constants'
+import { ETHERSCAN_MUMBAI_POLYGON_TX_BASE_URL } from '../constants'
 import Coin from '../assets/coinflip.png'
 import { RotateAnimation } from './header'
 
